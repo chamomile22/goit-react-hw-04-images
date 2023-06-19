@@ -7,19 +7,18 @@ const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ largeImg, onClose, tags }) => {
   useEffect(() => {
+    const handleCloseEsc = event => {
+      if (event.code === 'Escape') {
+        onClose();
+      }
+    };
     window.addEventListener('keydown', handleCloseEsc);
     document.documentElement.style.overflow = 'hidden';
     return () => {
       window.removeEventListener('keydown', handleCloseEsc);
       document.documentElement.style.overflow = 'unset';
     };
-  });
-
-  const handleCloseEsc = event => {
-    if (event.code === 'Escape') {
-      onClose();
-    }
-  };
+  }, [onClose]);
 
   const handleBackdropClick = event => {
     if (event.target === event.currentTarget) {
